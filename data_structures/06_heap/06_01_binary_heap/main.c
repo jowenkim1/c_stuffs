@@ -12,23 +12,23 @@
 
 int main(void) {
   BinaryHeap heap;
-  CHECK(heap_init(&heap, 8) == DS_OK, "init");
+  CHECK(heap_init(&heap, 8), "init");
 
   heap_value_t value = 0;
-  CHECK(heap_peek(&heap, &value) == DS_ERR_EMPTY, "peek empty");
-  CHECK(heap_pop(&heap, &value) == DS_ERR_EMPTY, "pop empty");
+  CHECK(!heap_peek(&heap, &value), "peek empty");
+  CHECK(!heap_pop(&heap, &value), "pop empty");
 
-  CHECK(heap_push(&heap, 3) == DS_OK, "push 3");
-  CHECK(heap_push(&heap, 1) == DS_OK, "push 1");
-  CHECK(heap_push(&heap, 2) == DS_OK, "push 2");
+  CHECK(heap_push(&heap, 3), "push 3");
+  CHECK(heap_push(&heap, 1), "push 1");
+  CHECK(heap_push(&heap, 2), "push 2");
 
-  CHECK(heap_peek(&heap, &value) == DS_OK && value == 1, "peek min");
-  CHECK(heap_pop(&heap, &value) == DS_OK && value == 1, "pop min");
+  CHECK(heap_peek(&heap, &value) && value == 1, "peek min");
+  CHECK(heap_pop(&heap, &value) && value == 1, "pop min");
 
-  CHECK(heap_reserve(&heap, 2) == DS_ERR_INVALID, "reserve too small");
+  CHECK(!heap_reserve(&heap, 2), "reserve too small");
 
   heap_clear(&heap);
-  CHECK(heap_is_empty(&heap) == 1, "clear empty");
+  CHECK(heap_is_empty(&heap) == true, "clear empty");
 
   heap_destroy(&heap);
   printf("heap ok\n");

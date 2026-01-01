@@ -1,22 +1,13 @@
 #ifndef QUEUE_ARRAY_H
 #define QUEUE_ARRAY_H
 
+#include <stdbool.h>
 #include <stddef.h>
-
-#ifndef DS_STATUS_H
-#define DS_STATUS_H
-#define DS_OK 0
-#define DS_ERR_INVALID -1
-#define DS_ERR_EMPTY -2
-#define DS_ERR_FULL -3
-#define DS_ERR_NOMEM -4
-#define DS_ERR_NOT_FOUND -5
-#endif
 
 /*
  * ADT conventions:
- * - Status functions return DS_OK on success, negative DS_ERR_* on failure.
- * - Boolean queries return 1 (true), 0 (false), or DS_ERR_INVALID for bad args.
+ * - Functions that can fail return bool: true on success, false on failure.
+ * - Query functions return bool; false also covers invalid args.
  * - out_value must be non-NULL; it is unchanged on failure.
  */
 
@@ -34,12 +25,12 @@ typedef struct {
 void queue_array_init(QueueArray *queue);
 size_t queue_array_size(const QueueArray *queue);
 size_t queue_array_capacity(const QueueArray *queue);
-int queue_array_is_empty(const QueueArray *queue);
-int queue_array_is_full(const QueueArray *queue);
-int queue_array_enqueue(QueueArray *queue, queue_array_value_t value);
-int queue_array_dequeue(QueueArray *queue, queue_array_value_t *out_value);
-int queue_array_front(const QueueArray *queue, queue_array_value_t *out_value);
-int queue_array_back(const QueueArray *queue, queue_array_value_t *out_value);
+bool queue_array_is_empty(const QueueArray *queue);
+bool queue_array_is_full(const QueueArray *queue);
+bool queue_array_enqueue(QueueArray *queue, queue_array_value_t value);
+bool queue_array_dequeue(QueueArray *queue, queue_array_value_t *out_value);
+bool queue_array_front(const QueueArray *queue, queue_array_value_t *out_value);
+bool queue_array_back(const QueueArray *queue, queue_array_value_t *out_value);
 void queue_array_clear(QueueArray *queue);
 
 #endif

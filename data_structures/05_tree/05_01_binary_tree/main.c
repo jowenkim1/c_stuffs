@@ -18,7 +18,7 @@ int main(void) {
   BinaryTree tree;
   binary_tree_init(&tree);
 
-  CHECK(binary_tree_set_root(&tree, NULL) == DS_ERR_INVALID, "set root null");
+  CHECK(!binary_tree_set_root(&tree, NULL), "set root null");
 
   BinaryTreeNode *n1 = binary_tree_create_node(1);
   BinaryTreeNode *n2 = binary_tree_create_node(2);
@@ -26,10 +26,10 @@ int main(void) {
   BinaryTreeNode *n4 = binary_tree_create_node(4);
 
   CHECK(n1 && n2 && n3 && n4, "node alloc");
-  CHECK(binary_tree_set_root(&tree, n1) == DS_OK, "set root");
-  CHECK(binary_tree_insert_left(&tree, n1, n2) == DS_OK, "insert left");
-  CHECK(binary_tree_insert_right(&tree, n1, n3) == DS_OK, "insert right");
-  CHECK(binary_tree_insert_left(&tree, n1, n4) == DS_ERR_INVALID, "insert left occupied");
+  CHECK(binary_tree_set_root(&tree, n1), "set root");
+  CHECK(binary_tree_insert_left(&tree, n1, n2), "insert left");
+  CHECK(binary_tree_insert_right(&tree, n1, n3), "insert right");
+  CHECK(!binary_tree_insert_left(&tree, n1, n4), "insert left occupied");
 
   CHECK(binary_tree_size(&tree) == 3, "size");
 

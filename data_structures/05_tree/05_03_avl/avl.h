@@ -1,23 +1,14 @@
 #ifndef AVL_H
 #define AVL_H
 
+#include <stdbool.h>
 #include <stddef.h>
-
-#ifndef DS_STATUS_H
-#define DS_STATUS_H
-#define DS_OK 0
-#define DS_ERR_INVALID -1
-#define DS_ERR_EMPTY -2
-#define DS_ERR_FULL -3
-#define DS_ERR_NOMEM -4
-#define DS_ERR_NOT_FOUND -5
-#endif
 
 /*
  * ADT conventions:
- * - Status functions return DS_OK on success, negative DS_ERR_* on failure.
- * - Boolean queries return 1 (true), 0 (false), or DS_ERR_INVALID for bad args.
- * - insert on existing value is a no-op and returns DS_OK.
+ * - Functions that can fail return bool: true on success, false on failure.
+ * - Query functions return bool; false also covers invalid args.
+ * - insert on existing value is a no-op and returns true.
  */
 
 typedef int avl_value_t;
@@ -37,15 +28,15 @@ typedef struct {
 void avl_init(AVLTree *tree);
 void avl_destroy(AVLTree *tree);
 
-int avl_insert(AVLTree *tree, avl_value_t value);
-int avl_remove(AVLTree *tree, avl_value_t value);
-int avl_find(const AVLTree *tree, avl_value_t value);
+bool avl_insert(AVLTree *tree, avl_value_t value);
+bool avl_remove(AVLTree *tree, avl_value_t value);
+bool avl_find(const AVLTree *tree, avl_value_t value);
 
-int avl_min(const AVLTree *tree, avl_value_t *out_value);
-int avl_max(const AVLTree *tree, avl_value_t *out_value);
+bool avl_min(const AVLTree *tree, avl_value_t *out_value);
+bool avl_max(const AVLTree *tree, avl_value_t *out_value);
 
 size_t avl_size(const AVLTree *tree);
-int avl_is_empty(const AVLTree *tree);
+bool avl_is_empty(const AVLTree *tree);
 
 void avl_inorder(const AVLTree *tree, void (*visit)(avl_value_t));
 void avl_preorder(const AVLTree *tree, void (*visit)(avl_value_t));

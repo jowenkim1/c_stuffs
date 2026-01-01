@@ -1,23 +1,14 @@
 #ifndef RED_BLACK_H
 #define RED_BLACK_H
 
+#include <stdbool.h>
 #include <stddef.h>
-
-#ifndef DS_STATUS_H
-#define DS_STATUS_H
-#define DS_OK 0
-#define DS_ERR_INVALID -1
-#define DS_ERR_EMPTY -2
-#define DS_ERR_FULL -3
-#define DS_ERR_NOMEM -4
-#define DS_ERR_NOT_FOUND -5
-#endif
 
 /*
  * ADT conventions:
- * - Status functions return DS_OK on success, negative DS_ERR_* on failure.
- * - Boolean queries return 1 (true), 0 (false), or DS_ERR_INVALID for bad args.
- * - insert on existing value is a no-op and returns DS_OK.
+ * - Functions that can fail return bool: true on success, false on failure.
+ * - Query functions return bool; false also covers invalid args.
+ * - insert on existing value is a no-op and returns true.
  */
 
 typedef int red_black_value_t;
@@ -43,15 +34,15 @@ typedef struct {
 void red_black_init(RedBlackTree *tree);
 void red_black_destroy(RedBlackTree *tree);
 
-int red_black_insert(RedBlackTree *tree, red_black_value_t value);
-int red_black_remove(RedBlackTree *tree, red_black_value_t value);
-int red_black_find(const RedBlackTree *tree, red_black_value_t value);
+bool red_black_insert(RedBlackTree *tree, red_black_value_t value);
+bool red_black_remove(RedBlackTree *tree, red_black_value_t value);
+bool red_black_find(const RedBlackTree *tree, red_black_value_t value);
 
-int red_black_min(const RedBlackTree *tree, red_black_value_t *out_value);
-int red_black_max(const RedBlackTree *tree, red_black_value_t *out_value);
+bool red_black_min(const RedBlackTree *tree, red_black_value_t *out_value);
+bool red_black_max(const RedBlackTree *tree, red_black_value_t *out_value);
 
 size_t red_black_size(const RedBlackTree *tree);
-int red_black_is_empty(const RedBlackTree *tree);
+bool red_black_is_empty(const RedBlackTree *tree);
 
 void red_black_inorder(const RedBlackTree *tree, void (*visit)(red_black_value_t));
 void red_black_preorder(const RedBlackTree *tree, void (*visit)(red_black_value_t));

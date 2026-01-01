@@ -15,21 +15,21 @@ int main(void) {
   stack_ll_init(&stack);
 
   CHECK(stack_ll_size(&stack) == 0, "init size");
-  CHECK(stack_ll_is_empty(&stack) == 1, "init empty");
+  CHECK(stack_ll_is_empty(&stack) == true, "init empty");
 
   stack_ll_value_t value = 0;
-  CHECK(stack_ll_pop(&stack, &value) == DS_ERR_EMPTY, "pop empty");
-  CHECK(stack_ll_peek(&stack, &value) == DS_ERR_EMPTY, "peek empty");
+  CHECK(!stack_ll_pop(&stack, &value), "pop empty");
+  CHECK(!stack_ll_peek(&stack, &value), "peek empty");
 
-  CHECK(stack_ll_push(&stack, 10) == DS_OK, "push 10");
-  CHECK(stack_ll_push(&stack, 20) == DS_OK, "push 20");
-  CHECK(stack_ll_push(&stack, 30) == DS_OK, "push 30");
+  CHECK(stack_ll_push(&stack, 10), "push 10");
+  CHECK(stack_ll_push(&stack, 20), "push 20");
+  CHECK(stack_ll_push(&stack, 30), "push 30");
 
-  CHECK(stack_ll_peek(&stack, &value) == DS_OK && value == 30, "peek value");
-  CHECK(stack_ll_pop(&stack, &value) == DS_OK && value == 30, "pop value");
+  CHECK(stack_ll_peek(&stack, &value) && value == 30, "peek value");
+  CHECK(stack_ll_pop(&stack, &value) && value == 30, "pop value");
 
   stack_ll_clear(&stack);
-  CHECK(stack_ll_is_empty(&stack) == 1, "clear empty");
+  CHECK(stack_ll_is_empty(&stack) == true, "clear empty");
 
   stack_ll_destroy(&stack);
   printf("stack_ll ok\n");
